@@ -69,3 +69,6 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
             plaintext += ch
             key_idx += 1
     return plaintext
+
+
+print(encrypt_vigenere("introduction to python", "lsci"))
