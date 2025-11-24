@@ -1,3 +1,6 @@
+ALPHABET_SIZE = 26
+
+
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     """
     Encrypts plaintext using a Vigenere cipher.
@@ -11,26 +14,22 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     ciphertext = ""
     key_idx = 0
     key_len = len(keyword)
-    for ch in plaintext:
+    for key_idx, ch in enumerate(plaintext):
         if "A" <= ch <= "Z":
-            pos = ord(ch) - ord("A")
-            key_char = keyword[key_idx % key_len]
-            shift = ord(key_char) - ord("A")
-            new_pos = pos + shift
-            new_ch = chr(ord("A") + new_pos % 26)
-            ciphertext += new_ch
-            key_idx += 1
+            a_letter_index = ord("A")
         elif "a" <= ch <= "z":
-            pos = ord(ch) - ord("a")
-            key_char = keyword[key_idx % key_len]
-            shift = ord(key_char) - ord("a")
-            new_pos = pos + shift
-            new_ch = chr(ord("a") + new_pos % 26)
-            ciphertext += new_ch
-            key_idx += 1
+            a_letter_index = ord("a")
         else:
             ciphertext += ch
-            key_idx += 1
+            continue
+
+        pos = ord(ch) - a_letter_index
+        key_char = keyword[key_idx % key_len]
+        shift = ord(key_char) - a_letter_index
+        new_pos = pos + shift
+        new_ch = chr(a_letter_index + new_pos % ALPHABET_SIZE)
+        ciphertext += new_ch
+
     return ciphertext
 
 
@@ -48,27 +47,21 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     plaintext = ""
     key_len = len(keyword)
     key_idx = 0
-    for ch in ciphertext:
+
+    for key_idx, ch in enumerate(ciphertext):
         if "A" <= ch <= "Z":
-            pos = ord(ch) - ord("A")
-            key_let = keyword[key_idx % key_len]
-            shift = ord(key_let) - ord("A")
-            new_pos = pos - shift
-            new_ch = chr(ord("A") + new_pos % 26)
-            plaintext += new_ch
-            key_idx += 1
+            a_letter_index = ord("A")
         elif "a" <= ch <= "z":
-            pos = ord(ch) - ord("a")
-            key_let = keyword[key_idx % key_len]
-            shift = ord(key_let) - ord("a")
-            new_pos = pos - shift
-            new_ch = chr(ord("a") + new_pos % 26)
-            plaintext += new_ch
-            key_idx += 1
+            a_letter_index = ord("a")
         else:
             plaintext += ch
-            key_idx += 1
+            continue
+
+        pos = ord(ch) - a_letter_index
+        key_let = keyword[key_idx % key_len]
+        shift = ord(key_let) - a_letter_index
+        new_pos = pos - shift
+        new_ch = chr(a_letter_index + new_pos % ALPHABET_SIZE)
+        plaintext += new_ch
+
     return plaintext
-
-
-print(encrypt_vigenere("introduction to python", "lsci"))
