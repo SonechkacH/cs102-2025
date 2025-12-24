@@ -20,13 +20,9 @@ class GUI(UI):
 
     def draw_lines(self) -> None:
         for x in range(0, self.width, self.cell_size):
-            pygame.draw.line(
-                self.screen, pygame.Color("darkgray"), (x, 0), (x, self.height)
-            )
+            pygame.draw.line(self.screen, pygame.Color("darkgray"), (x, 0), (x, self.height))
         for y in range(0, self.height, self.cell_size):
-            pygame.draw.line(
-                self.screen, pygame.Color("darkgray"), (0, y), (self.width, y)
-            )
+            pygame.draw.line(self.screen, pygame.Color("darkgray"), (0, y), (self.width, y))
 
     def draw_grid(self) -> None:
         # Copy from previous assignment
@@ -50,9 +46,7 @@ class GUI(UI):
                 pygame.draw.rect(self.screen, color, rect)
         self.draw_lines()
         font = pygame.font.Font(None, 36)
-        text = font.render(
-            f"Generation: {self.life.generations}", True, (255, 255, 255)
-        )
+        text = font.render(f"Generation: {self.life.generations}", True, (255, 255, 255))
         self.screen.blit(text, (10, 10))
 
         if self.life.is_max_generations_exceeded or not self.life.is_changing:
@@ -73,9 +67,7 @@ class GUI(UI):
                     if event.key == K_SPACE:
                         paused = not paused
                     elif event.key == K_r:
-                        self.life.curr_generation = self.life.create_grid(
-                            randomize=True
-                        )
+                        self.life.curr_generation = self.life.create_grid(randomize=True)
                         self.life.generations = 1
                     elif event.key == K_ESCAPE:
                         running = False
@@ -84,13 +76,8 @@ class GUI(UI):
                         x, y = event.pos
                         cell_x = x // self.cell_size
                         cell_y = y // self.cell_size
-                        if (
-                            0 <= cell_x < self.life.cols
-                            and 0 <= cell_y < self.life.rows
-                        ):
-                            self.life.curr_generation[cell_y][cell_x] = (
-                                1 - self.life.curr_generation[cell_y][cell_x]
-                            )
+                        if 0 <= cell_x < self.life.cols and 0 <= cell_y < self.life.rows:
+                            self.life.curr_generation[cell_y][cell_x] = 1 - self.life.curr_generation[cell_y][cell_x]
             if not paused:
                 self.life.step()
 
